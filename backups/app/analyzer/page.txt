@@ -1,0 +1,148 @@
+import React from "react";
+import { BarChart2, ShieldAlert, Zap, Layers } from "lucide-react";
+import { TypeBadge } from "@/components/pokemon/TypeBadge";
+
+export default function AnalyzerPage() {
+  return (
+    <div className="h-full flex flex-col gap-6 animate-in fade-in duration-300">
+      
+      {/* Header */}
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Team Analyzer</h1>
+          <p className="text-text-secondary text-sm">Analyzing: VGC 2024 Tailwind Hyper Offense</p>
+        </div>
+        <div className="flex gap-2 bg-card p-1 rounded border border-soft">
+           <button className="px-3 py-1 text-xs font-medium bg-app text-text-primary rounded shadow-sm border border-soft">Singles</button>
+           <button className="px-3 py-1 text-xs font-medium text-text-muted hover:text-text-primary">Doubles</button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0">
+        
+        {/* Left Col: Overview & Score */}
+        <div className="space-y-6">
+          {/* Team Score */}
+          <div className="bg-card border border-soft rounded-xl p-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-5">
+              <BarChart2 size={120} />
+            </div>
+            <h2 className="font-semibold text-text-primary mb-4 flex items-center gap-2 relative z-10">
+               <ShieldAlert size={18} className="text-accent-primary" /> Overall Synergy Score
+            </h2>
+            <div className="flex items-end gap-3 relative z-10">
+              <span className="text-6xl font-bold font-mono text-text-primary">86</span>
+              <span className="text-xl text-text-secondary mb-1">/ 100</span>
+            </div>
+            <p className="text-sm text-status-success mt-4 relative z-10">Excellent offensive coverage. Needs better pivot options.</p>
+          </div>
+
+          {/* Role Balance */}
+          <div className="bg-card border border-soft rounded-xl p-6">
+            <h2 className="font-semibold text-text-primary mb-4 flex items-center gap-2">
+               <Layers size={18} className="text-accent-secondary" /> Role Balance
+            </h2>
+            <div className="space-y-4">
+               <RoleBar label="Physical Sweeper" count={2} color="bg-status-danger" />
+               <RoleBar label="Special Sweeper" count={1} color="bg-accent-secondary" />
+               <RoleBar label="Support / Pivot" count={2} color="bg-status-success" />
+               <RoleBar label="Wallbreaker" count={1} color="bg-status-warning" />
+            </div>
+          </div>
+        </div>
+
+        {/* Middle Col: Weakness Grid */}
+        <div className="lg:col-span-2 bg-card border border-soft rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+           <div className="p-6 border-b border-soft bg-app/40 flex items-center justify-between">
+             <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-text-muted">Type Defensive Matrix</h2>
+             <div className="flex gap-4 text-[10px] font-mono text-text-secondary">
+                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-status-danger"></span> Weakness</span>
+                <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-status-success"></span> Resistance</span>
+             </div>
+           </div>
+           
+           <div className="flex-1 overflow-auto custom-scrollbar">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr className="bg-app/20 sticky top-0 z-10 backdrop-blur-md">
+                    <th className="p-4 text-[10px] text-text-muted font-bold uppercase tracking-widest border-b border-soft">Element</th>
+                    {['1', '2', '3', '4', '5', '6'].map(i => (
+                      <th key={i} className="p-4 text-center text-[10px] text-text-muted font-bold uppercase tracking-widest border-b border-soft">Slot {i}</th>
+                    ))}
+                    <th className="p-4 text-center text-[10px] text-text-muted font-bold uppercase tracking-widest border-b border-soft bg-accent-glow/10">Delta</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  <GridRow type="Ground" values={[1, 1, 0.5, 2, 1, 1]} totalWeak={1} totalResist={1} />
+                  <GridRow type="Ice" values={[1, 2, 2, 1, 0.5, 2]} totalWeak={3} totalResist={1} highlight />
+                  <GridRow type="Fairy" values={[1, 4, 1, 1, 2, 1]} totalWeak={2} totalResist={0} highlight />
+                  <GridRow type="Water" values={[1, 0.5, 0.5, 2, 0.5, 1]} totalWeak={1} totalResist={3} />
+                  <GridRow type="Fire" values={[1, 0.5, 2, 0.5, 0.5, 2]} totalWeak={2} totalResist={3} />
+                  <GridRow type="Steel" values={[1, 1, 0.5, 1, 0.5, 1]} totalWeak={0} totalResist={2} />
+                  <GridRow type="Dragon" values={[1, 2, 1, 1, 1, 1]} totalWeak={1} totalResist={0} />
+                </tbody>
+              </table>
+           </div>
+
+           <div className="p-6 bg-gradient-to-r from-status-danger/10 to-transparent border-t border-status-danger/20 flex items-start gap-4">
+             <div className="p-3 bg-status-danger/20 rounded-xl text-status-danger shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+               <ShieldAlert size={24} />
+             </div>
+             <div>
+               <p className="text-xs font-black uppercase tracking-[0.2em] text-status-danger mb-1 italic">Structural Alert: Extreme Vulnerability</p>
+               <p className="text-sm text-text-secondary leading-relaxed">Your team composition is heavily exploited by <span className="text-text-primary font-bold">Ice-type</span> and <span className="text-text-primary font-bold">Fairy-type</span> attackers. 50% of your roster takes effective damage from these types without a defensive pivot. </p>
+               <button className="mt-4 text-[10px] font-bold uppercase tracking-widest text-accent-primary hover:text-accent-secondary hover:underline transition-all">View Suggested Substitutions →</button>
+             </div>
+           </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+function RoleBar({ label, count, color }: { label: string, count: number, color: string }) {
+  return (
+    <div>
+      <div className="flex justify-between text-xs mb-1">
+        <span className="text-text-secondary">{label}</span>
+        <span className="font-mono">{count}/6</span>
+      </div>
+      <div className="h-2 w-full bg-app rounded-full overflow-hidden flex gap-0.5">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className={`flex-1 h-full ${i < count ? color : 'bg-transparent'}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GridRow({ type, values, totalWeak, totalResist, highlight }: { type: string, values: number[], totalWeak: number, totalResist: number, highlight?: boolean }) {
+  return (
+    <tr className={`border-b border-soft/30 hover:bg-card-hover transition-colors ${highlight ? 'bg-status-danger/5' : ''}`}>
+      <td className="p-2"><TypeBadge type={type} size="sm" /></td>
+      {values.map((v, i) => (
+        <td key={i} className="p-2 text-center font-mono">
+          <MultiplierBadge value={v} />
+        </td>
+      ))}
+      <td className="p-2 text-center">
+        <div className="flex justify-center gap-2 text-xs font-mono">
+          {totalWeak > 0 && <span className="text-status-danger">W:{totalWeak}</span>}
+          {totalResist > 0 && <span className="text-status-success">R:{totalResist}</span>}
+          {totalWeak === 0 && totalResist === 0 && <span className="text-text-muted">-</span>}
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function MultiplierBadge({ value }: { value: number }) {
+  if (value === 1) return <span className="text-text-muted opacity-30">—</span>;
+  if (value === 0) return <span className="bg-text-disabled text-text-primary px-1.5 py-0.5 rounded text-[10px]">0x</span>;
+  
+  const isWeak = value > 1;
+  const color = isWeak ? (value === 4 ? 'bg-status-danger text-white' : 'text-status-danger') : 'text-status-success';
+  
+  return <span className={`font-bold ${color}`}>{value}x</span>;
+}

@@ -1,0 +1,160 @@
+import React from "react";
+import { MOCK_SAVED_TEAMS, MOCK_POKEMON } from "@/data/mock/data";
+import { PlusCircle, BarChart2, FolderOpen, Search, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { PokemonCard } from "@/components/pokemon/PokemonCard";
+
+import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
+
+export default function Home() {
+  const isLoadingMeta = false; // Mocking state
+
+  return (
+    <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+      
+      {/* Header Summary */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-black tracking-tighter mb-2 italic uppercase">
+            System <span className="text-accent-primary">Overview</span>
+          </h1>
+          <p className="text-text-secondary text-sm font-medium">Monitoring competitive ecosystem and team performance.</p>
+        </div>
+        <div className="text-right hidden md:block">
+           <div className="text-[10px] text-text-muted uppercase tracking-widest font-bold mb-1">Local Time</div>
+           <div className="text-sm font-mono font-bold">{new Date().toLocaleTimeString()}</div>
+        </div>
+      </div>
+
+      {/* Quick Actions Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <QuickActionCard 
+          href="/builder" 
+          icon={<PlusCircle className="text-accent-primary" />} 
+          title="New Blueprint" 
+          desc="Initialize team parameters" 
+        />
+        <QuickActionCard 
+          href="/analyzer" 
+          icon={<BarChart2 className="text-status-warning" />} 
+          title="Meta Analysis" 
+          desc="Current format statistics" 
+        />
+        <QuickActionCard 
+          href="/saved" 
+          icon={<FolderOpen className="text-status-success" />} 
+          title="Active Vault" 
+          desc="Access saved compositions" 
+        />
+        <QuickActionCard 
+          href="#" 
+          icon={<Search className="text-accent-secondary" />} 
+          title="Database" 
+          desc="Global Pokémon registry" 
+        />
+      </div>
+
+      {/* Formats & Recent Teams */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Recent Teams (Spans 2 columns) */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="flex items-center justify-between border-b border-soft pb-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-text-muted flex items-center gap-2">
+              <FolderOpen size={16} /> Recent Deployments
+            </h2>
+            <Link href="/saved" className="text-[10px] font-bold uppercase tracking-widest text-accent-primary hover:text-accent-secondary transition-colors">
+              Directory
+            </Link>
+          </div>
+          
+          <div className="space-y-3">
+            {MOCK_SAVED_TEAMS.map(team => (
+              <Link href="/builder" key={team.id} className="block bg-card border border-soft hover:bg-card-hover hover:border-accent-primary/30 transition-all rounded-xl p-5 flex items-center justify-between group shadow-sm">
+                <div>
+                  <h3 className="font-bold text-base mb-1 group-hover:text-accent-primary transition-colors uppercase italic">{team.name}</h3>
+                  <div className="flex items-center gap-4 text-[10px] font-mono text-text-secondary">
+                    <span className="text-accent-primary">[{team.format}]</span>
+                    <span>LAST_MOD: {new Date(team.updatedAt).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                
+                {/* Mini Sprites Preview */}
+                <div className="flex items-center gap-1.5 bg-app/50 p-1.5 rounded-lg border border-soft">
+                  {team.pokemon.map((p, i) => (
+                    <div key={i} className="w-10 h-10 rounded-md bg-card border border-soft flex items-center justify-center group-hover:border-strong transition-colors">
+                      <img src={p.spriteUrl} alt={p.name} className="w-8 h-8 object-contain drop-shadow-sm" />
+                    </div>
+                  ))}
+                  {Array.from({ length: 6 - team.pokemon.length }).map((_, i) => (
+                    <div key={`empty-${i}`} className="w-10 h-10 rounded-md bg-app/30 border border-soft border-dashed" />
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Format Meta Preview */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between border-b border-soft pb-4">
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-text-muted flex items-center gap-2">
+              <BarChart2 size={16} /> Meta Usage
+            </h2>
+          </div>
+          
+          <div className="bg-card border border-soft rounded-2xl overflow-hidden shadow-xl">
+            <div className="p-5 border-b border-soft bg-app/40">
+               <div className="text-[10px] font-bold uppercase tracking-widest text-text-muted">Format Target</div>
+               <div className="text-sm font-bold text-text-primary">VGC 2024 REG G</div>
+            </div>
+            
+            <div className="p-5 space-y-5">
+              {isLoadingMeta ? (
+                <div className="space-y-4">
+                  <div className="h-8 bg-app rounded animate-pulse" />
+                  <div className="h-8 bg-app rounded animate-pulse" />
+                  <div className="h-8 bg-app rounded animate-pulse" />
+                </div>
+              ) : (
+                MOCK_POKEMON.slice(0, 4).map((p, i) => (
+                  <div key={p.id} className="flex items-center gap-4 group cursor-pointer">
+                    <div className="w-5 font-mono text-[10px] text-text-muted font-bold tracking-tighter">0{i + 1}</div>
+                    <div className="w-10 h-10 bg-app rounded-lg border border-soft flex items-center justify-center group-hover:border-accent-primary/40 transition-colors">
+                      <img src={p.spriteUrl} alt={p.name} className="w-8 h-8 object-contain" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold uppercase tracking-tight truncate group-hover:text-accent-primary transition-colors">{p.name}</div>
+                      <div className="h-1 w-full bg-app rounded-full mt-1.5 overflow-hidden">
+                        <div className="h-full bg-accent-primary opacity-60 group-hover:opacity-100 transition-all" style={{ width: `${85 - i * 12}%` }}></div>
+                      </div>
+                    </div>
+                    <div className="text-[10px] font-mono font-bold text-accent-primary italic">{85 - i * 12}%</div>
+                  </div>
+                ))
+              )}
+            </div>
+            
+            <div className="p-4 bg-app/60 border-t border-soft">
+              <button className="w-full py-2 bg-elevated border border-strong rounded-lg text-[10px] font-bold uppercase tracking-widest text-text-secondary hover:text-primary hover:border-accent-primary/40 transition-all">
+                Access Meta Intelligence
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QuickActionCard({ href, icon, title, desc }: { href: string, icon: React.ReactNode, title: string, desc: string }) {
+  return (
+    <Link href={href} className="bg-card border border-soft rounded-lg p-4 hover:bg-card-hover hover:border-strong transition-all duration-200 group">
+      <div className="mb-3 bg-app inline-flex p-2 rounded-md border border-soft group-hover:scale-110 transition-transform">
+        {icon}
+      </div>
+      <h3 className="font-semibold text-sm mb-1">{title}</h3>
+      <p className="text-xs text-text-muted">{desc}</p>
+    </Link>
+  );
+}

@@ -1,0 +1,48 @@
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import { Sidebar } from "@/components/layout/Sidebar";
+import { Topbar } from "@/components/layout/Topbar";
+
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
+
+export const metadata: Metadata = {
+  title: "Kadex - Competitive Pokémon Dashboard",
+  description: "Advanced team builder and analyzer for competitive Pokémon.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased text-text-primary bg-app min-h-screen overflow-hidden`}>
+        <ThemeProvider>
+          <div className="flex h-screen overflow-hidden">
+            {/* Sidebar Shell */}
+            <div className="hidden lg:flex flex-shrink-0 w-[260px]">
+              <Sidebar />
+            </div>
+            
+            {/* Main Shell */}
+            <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden relative">
+              <Topbar />
+              
+              {/* Page Content */}
+              <main className="flex-1 overflow-y-auto p-6 lg:p-8 custom-scrollbar">
+                <div className="max-w-[1600px] mx-auto">
+                  {children}
+                </div>
+              </main>
+            </div>
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
