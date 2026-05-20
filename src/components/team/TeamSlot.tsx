@@ -17,7 +17,7 @@ export function TeamSlot({ pokemon, isSelected, onClick }: TeamSlotProps) {
       onClick={onClick}
       className={`relative h-24 rounded-xl cursor-pointer transition-all duration-300 flex flex-col items-center justify-center group overflow-hidden ${
         isSelected 
-          ? "bg-elevated border-2 border-accent-primary shadow-[0_0_20px_rgba(59,130,246,0.2)] scale-[1.02] z-10" 
+          ? "bg-elevated border-2 border-accent-primary shadow-[0_0_20px_rgba(225,29,46,0.15)] scale-[1.02] z-10" 
           : "bg-card border border-soft hover:border-strong hover:bg-card-hover"
       } ${!pokemon ? "border-dashed" : ""}`}
     >

@@ -1,30 +1,23 @@
-"use client";
-
 import React from "react";
-import { Activity, Hexagon } from "lucide-react";
+import { SkeletonBlock, SkeletonCard } from "@/components/ui/Skeleton";
 
-/**
- * Root Loading Component
- * Prevents blank screens during global navigation/initial load.
- */
-export default function GlobalLoading() {
+export default function HomeLoading() {
   return (
-    <div className="fixed inset-0 z-[999] bg-[#fafafa] flex flex-col items-center justify-center p-6 rc-animate-fade">
-      <div className="flex flex-col items-center gap-6">
-        <div className="w-20 h-20 rounded-[28px] bg-[#e11d2e] text-white flex items-center justify-center shadow-2xl shadow-red-100">
-          <Hexagon size={40} fill="currentColor" className="opacity-80 animate-pulse" />
+    <div className="max-w-[1400px] mx-auto p-6 lg:p-10 space-y-16 rc-animate-fade pb-32">
+      <div className="flex flex-col items-center text-center space-y-8 mt-12">
+        <SkeletonBlock className="w-24 h-24 rounded-full" />
+        <SkeletonBlock className="w-64 md:w-96 h-16 rounded-xl" />
+        <SkeletonBlock className="w-full max-w-2xl h-16 rounded-full" />
+        <div className="flex gap-4">
+          <SkeletonBlock className="w-32 h-12 rounded-full" />
+          <SkeletonBlock className="w-32 h-12 rounded-full" />
         </div>
-        <div className="space-y-2 text-center">
-          <h2 className="text-xl font-black text-[#0f172a] uppercase italic tracking-tighter">
-            Kadex System Initializing
-          </h2>
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">
-            Synchronizing Tactical Data...
-          </p>
-        </div>
-        <div className="w-48 h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2 border border-slate-200 shadow-inner">
-          <div className="h-full bg-[#e11d2e] animate-shimmer" style={{ width: '35%' }} />
-        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
+        <SkeletonCard />
       </div>
     </div>
   );

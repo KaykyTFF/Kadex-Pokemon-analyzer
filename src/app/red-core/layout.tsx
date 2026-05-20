@@ -10,7 +10,7 @@ export default function RedCoreLayout({ children }: { children: React.ReactNode 
   const pathname = usePathname();
 
   return (
-    <div className="red-core-theme fixed inset-0 z-[150] flex flex-col font-sans animate-in fade-in duration-300 overflow-hidden">
+    <div className="red-core-theme fixed inset-0 z-[150] flex flex-col font-sans animate-in fade-in duration-300 overflow-hidden bg-[var(--rc-bg-app)]">
       
       {/* TOP NAVIGATION (Builder First) */}
       <header className="h-[64px] bg-[var(--rc-bg-surface)]/80 backdrop-blur-md border-b border-[var(--rc-border-soft)] flex items-center justify-between px-6 shrink-0 z-50 sticky top-0 shadow-[0_1px_10px_rgba(0,0,0,0.02)]">
@@ -23,7 +23,6 @@ export default function RedCoreLayout({ children }: { children: React.ReactNode 
           </div>
 
           <nav className="hidden md:flex items-center gap-1 bg-[var(--rc-bg-muted)]/50 p-1 rounded-full border border-[var(--rc-border-soft)]">
-             <TopNavLink href="/red-core" icon={<Target size={16} />} label="Workspace" active={pathname === '/red-core'} />
              <TopNavLink href="/red-core/builder" icon={<Sword size={16} />} label="Builder" active={pathname === '/red-core/builder'} />
              <TopNavLink href="/red-core/analyzer" icon={<Crosshair size={16} />} label="Analyzer" active={pathname === '/red-core/analyzer'} />
              <TopNavLink href="/red-core/pokemon" icon={<Search size={16} />} label="Pokédex" active={pathname === '/red-core/pokemon'} />

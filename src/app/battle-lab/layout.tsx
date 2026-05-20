@@ -92,7 +92,6 @@ export default function BattleLabLayout({ children }: { children: React.ReactNod
            <div className="text-[10px] font-bold uppercase tracking-widest text-[var(--bl-ink-subtle)] mb-4 px-2">Navigation</div>
            
            <div className="flex flex-col gap-1">
-             <NavLink href="/battle-lab" icon={<Layers size={16} />} label="Workspace" active={pathname === '/battle-lab'} />
              <NavLink href="/battle-lab/builder" icon={<Sword size={16} />} label="Team Builder" active={pathname === '/battle-lab/builder'} />
              <NavLink href="/battle-lab/analyzer" icon={<PieChart size={16} />} label="Analyzer" active={pathname === '/battle-lab/analyzer'} />
              <NavLink href="/battle-lab/pokemon" icon={<Search size={16} />} label="Dex Search" active={pathname === '/battle-lab/pokemon'} />

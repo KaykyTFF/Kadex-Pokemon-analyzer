@@ -2,6 +2,7 @@ export const MOCK_POKEMON = [
   {
     id: 987,
     name: "Flutter Mane",
+    slug: "flutter-mane",
     types: ["Ghost", "Fairy"],
     abilities: ["Protosynthesis"],
     baseStats: { hp: 55, atk: 55, def: 55, spa: 135, spd: 135, spe: 135 },
@@ -11,6 +12,7 @@ export const MOCK_POKEMON = [
   {
     id: 1007,
     name: "Koraidon",
+    slug: "koraidon",
     types: ["Fighting", "Dragon"],
     abilities: ["Orichalcum Pulse"],
     baseStats: { hp: 100, atk: 135, def: 115, spa: 85, spd: 100, spe: 135 },
@@ -20,6 +22,7 @@ export const MOCK_POKEMON = [
   {
     id: 812,
     name: "Rillaboom",
+    slug: "rillaboom",
     types: ["Grass"],
     abilities: ["Overgrow", "Grassy Surge"],
     baseStats: { hp: 100, atk: 125, def: 90, spa: 60, spd: 70, spe: 85 },
@@ -29,6 +32,7 @@ export const MOCK_POKEMON = [
   {
     id: 727,
     name: "Incineroar",
+    slug: "incineroar",
     types: ["Fire", "Dark"],
     abilities: ["Blaze", "Intimidate"],
     baseStats: { hp: 95, atk: 115, def: 90, spa: 80, spd: 90, spe: 60 },
@@ -38,6 +42,7 @@ export const MOCK_POKEMON = [
   {
     id: 892,
     name: "Urshifu",
+    slug: "urshifu",
     types: ["Fighting", "Water"],
     abilities: ["Unseen Fist"],
     baseStats: { hp: 100, atk: 130, def: 100, spa: 63, spd: 60, spe: 97 },
@@ -47,6 +52,7 @@ export const MOCK_POKEMON = [
   {
     id: 591,
     name: "Amoonguss",
+    slug: "amoonguss",
     types: ["Grass", "Poison"],
     abilities: ["Effect Spore", "Regenerator"],
     baseStats: { hp: 114, atk: 85, def: 70, spa: 85, spd: 80, spe: 30 },

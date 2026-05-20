@@ -10,23 +10,26 @@ interface TypeBadgeProps {
 
 /**
  * TypeBadge Component
- * Hardened version with safe fallbacks to prevent runtime crashes.
+ * Extremely hardened version to prevent any runtime crashes.
  */
-export function TypeBadge({ type = "Unknown", size = "md" }: TypeBadgeProps) {
-  // Ensure type is a valid string for indexing
-  const safeType = type || "Unknown";
+export function TypeBadge({ type, size = "md" }: TypeBadgeProps) {
+  // 1. Validate type is a non-empty string
+  const hasType = typeof type === 'string' && type.trim().length > 0;
+  const safeType = hasType ? type.trim() : "Unknown";
   
-  // Safe color lookup with default fallback
-  const colors = TYPE_COLORS[safeType] || { from: "#64748b", to: "#334155" };
+  // 2. Safe color lookup with default fallback
+  // Using a robust fallback color (Gray)
+  const defaultColors = { from: "#64748b", to: "#334155" };
+  const colors = (TYPE_COLORS && TYPE_COLORS[safeType]) || defaultColors;
   
-  // Safe size handling
+  // 3. Safe size handling
   const sizeClasses = {
     sm: "px-1.5 py-0.5 text-[9px] rounded",
     md: "px-2.5 py-1 text-[10px] rounded-md",
     lg: "px-3 py-1.5 text-xs rounded-lg"
   };
   
-  const currentSizeClass = sizeClasses[size] || sizeClasses.md;
+  const currentSizeClass = sizeClasses[size as keyof typeof sizeClasses] || sizeClasses.md;
 
   return (
     <span 

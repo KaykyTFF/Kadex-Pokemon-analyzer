@@ -23,10 +23,10 @@ export default function RedCoreBuilder() {
   const activePokemon = team[selectedSlot];
 
   return (
-    <div className="max-w-[1400px] mx-auto p-6 lg:p-10 space-y-10 rc-animate-fade pb-32">
+    <div className="kadex-page-container rc-animate-fade pb-32">
       
       {/* 1. TEAM HEADER (Refined with Settings) */}
-      <div className="flex flex-col xl:flex-row justify-between items-start gap-8 border-b border-[var(--rc-border-soft)] pb-8">
+      <div className="flex flex-col xl:flex-row justify-between items-start gap-8 border-b border-[var(--rc-border-soft)] pb-8 kadex-page-hero">
         <div className="space-y-4 flex-1 w-full">
            {/* Top Metadata Rail */}
            <div className="flex flex-wrap items-center gap-3">
@@ -80,7 +80,7 @@ export default function RedCoreBuilder() {
 
 
       {/* 2. CURRENT FORMATION PANEL (Refined & Compact) */}
-      <section className="rc-card bg-white overflow-hidden p-1 shadow-[var(--rc-shadow-card)]">
+      <section className="rc-card bg-white overflow-hidden p-1 shadow-[var(--rc-shadow-card)] mb-12">
          <div className="flex items-center justify-between p-5 pb-3">
             <div className="flex items-center gap-3">
               <Users size={18} className="text-[var(--rc-accent-primary)]" />
